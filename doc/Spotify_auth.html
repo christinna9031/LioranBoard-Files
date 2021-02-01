@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">    
+<title>LioranBoard Spotify Authentication</title>
+</head>
+<style>
+.text {
+font-family: "Arial";
+font-size: 16px }
+img {
+vertical-align:middle  
+}
+code {
+    background-color: #dbdbdb;
+    padding:2px 4px;
+    -webkit-text-size-adjust: 100%;
+    outline: 1px solid #ccc; 
+        margin: 5px; 
+    white-space: pre-wrap;       
+    white-space: -moz-pre-wrap;  
+    white-space: -pre-wrap;      
+    white-space: -o-pre-wrap;    
+    word-wrap: break-word;    
+    
+  }
+</style>
+<body>
+<div class="text">
+<h1>LioranBoard Spotify Authentication (part1)</h1>
+<b>Important: This extension only works with Premium Spotify accounts. </b><br>
+<p>
+<ol>
+<li>
+Log into a developer account on Spotify: <a href="https://developer.spotify.com/dashboard/applications" target="_blank">https://developer.spotify.com/dashboard/applications</a>. This must be the same account you're using to play your Spotify music.     
+</li>    
+<li>Go to your Dashboard and click on this button <img src="https://i.imgur.com/mdvfl6w.png" width="200px">.</li><Br>
+<li>Fill out the necessary fields as you see fit and press create. For example: <br><br><img src="https://i.imgur.com/CxCldcP.png" width=400px></li>
+<li>You should now see your created application. (If not, go to Dashboard and click on your application name). Click on <img src="https://i.imgur.com/TJ4kF36.png" width="180px">.  </li> <br>
+<li>Copy and paste this: <code>https://lb-spotifytoken.herokuapp.com/callback</code> into Redirect URIs field and click on <b>Add</b>. <br><img src="https://i.imgur.com/WzldnNn.png" width="500px"> <br> Scroll down and do not forget to click on <img src="https://i.imgur.com/Ijibvbi.png" width="100px">. <Br> You can refresh you page and check if it properly saved, otherwise the next step is not going to work. </li><br>
+<li>Click on <img src="https://i.imgur.com/HqxD5Lr.png" width="200px" >, copy both your ClientId and Client Secret, paste them below and click on Authenticate. You will be then prompted to authenticate your own app you just created. It might take a few seconds to load the page. <br> <br>
+ 
+    ClientId: <input type="text" id="clientid"> Client Secret: <input type="text"  id="clientsecret"> 
+    <button type="button" id="SpotifyAuth" style="margin: 2px 0px">Authenticate</button>
+</li>
+</ol>    
+</p>
+</div>
+<script>
+
+document.getElementById("SpotifyAuth").addEventListener("click", function (){
+    let client_id= document.getElementById("clientid").value
+    let client_secret= document.getElementById("clientsecret").value
+    window.open("https://lb-spotifytoken.herokuapp.com/login?client_id="+client_id+"&client_secret="+client_secret)
+
+})
+
+</script>  
+</body> 
+</html>
