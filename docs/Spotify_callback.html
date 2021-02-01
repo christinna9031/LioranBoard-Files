@@ -29,13 +29,14 @@
         <div class="text">
             <h1> LioranBoard Spotify Authentication (part 2) </h1>   
         <div  id="text">
+        
         </div>
         <div>
         <p>
         <ol>
         <li>
         Click on Edit Commands in your Spotify INIT button. <img src="https://i.imgur.com/4Boc3Vi.png" width="50px"> </li>
-        <li>value1 = credentials <br>
+        <li>value1 = credentials <br> 
             value2 = your refresh token<br>
             value3 = button ID to display current song name and artist (already pre-filled)
         </li>
@@ -59,8 +60,28 @@ let url = new URL(url_string);
 let refresh_token = url.searchParams.get("refresh_token");
 let credentials = url.searchParams.get("id");
 
-document.getElementById("text").innerHTML="<p>Your credentials: <code>"+credentials+"</code><br> Your refresh token: <code>"+refresh_token+"</code></p>"
+document.getElementById("text").innerHTML="<p>Your credentials: <code>"+credentials+"</code> <button id='copyCred'>Copy to Clipboard</button><br><br> Your refresh token: <code>"+refresh_token+"</code><button id='copytoken'>Copy to Clipboard</button></p>"
 
+document.getElementById("copyCred").addEventListener("click", function (){
+    CopyToClipboard (credentials,'copyCred')
+})
+
+document.getElementById("copytoken").addEventListener("click", function (){
+    CopyToClipboard (refresh_token,'copytoken')
+})
+
+function CopyToClipboard (value,name){
+    let copyhelper = document.createElement("input");
+          copyhelper.className = 'copyhelper'
+          document.body.appendChild(copyhelper);
+          copyhelper.value = value;
+          copyhelper.select();
+          document.execCommand("copy");
+          document.body.removeChild(copyhelper);
+          let button=document.querySelector("#"+name)
+          button.innerHTML = "Copied to Clipboard";
+
+}
 
 </script>   
 <body></body>
