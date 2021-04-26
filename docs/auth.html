@@ -14,10 +14,11 @@ let code = url.searchParams.get("code");
 let client_id = "240122917747-s5drrscofr0revgbdv6jripsemk1gcsn.apps.googleusercontent.com"
 let client_secret = "x_4Jz0ViajEsJw1Ees5v9hCH"
 
+
 Auth()
 
 async function Auth () {
-await fetch("https://oauth2.googleapis.com/token?client_id="+client_id+"&client_secret="+client_secret+"&grant_type=authorization_code&code="+code+"&redirect_uri=https://christinna9031.github.io",{
+await fetch("https://oauth2.googleapis.com/token?client_id="+client_id+"&client_secret="+client_secret+"&grant_type=authorization_code&code="+code+"&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/auth.html",{
 method:"POST"
 })
 .then(response => response.json())
