@@ -15,7 +15,7 @@ let client_id = process.env.CLIENT_ID
 let client_secret = process.env.CLIENT_SECRET
 
 var xhr = new XMLHttpRequest();
-xhr.open("POST", "https://oauth2.googleapis.com/token?client_id="+client_id+"&client_secret="+client_secret+"&grant_type=authorization_code&redirect_uri=https://christinna9031.github.io");
+xhr.open("POST", "https://oauth2.googleapis.com/token?client_id="+client_id+"&client_secret="+client_secret+"&grant_type=authorization_code&code="+code+"&redirect_uri=https://christinna9031.github.io");
 
 xhr.setRequestHeader("Content-Type", "application/json");
 xhr.setRequestHeader("Content-Length", "0");
