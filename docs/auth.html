@@ -11,8 +11,8 @@
 let url_string = window.location.href
 let url = new URL(url_string);
 let code = url.searchParams.get("code");
-let client_id = process.env.CLIENT_ID
-let client_secret = process.env.CLIENT_SECRET
+let client_id = "240122917747-s5drrscofr0revgbdv6jripsemk1gcsn.apps.googleusercontent.com"
+let client_secret = "x_4Jz0ViajEsJw1Ees5v9hCH"
 
 var xhr = new XMLHttpRequest();
 xhr.open("POST", "https://oauth2.googleapis.com/token?client_id="+client_id+"&client_secret="+client_secret+"&grant_type=authorization_code&code="+code+"&redirect_uri=https://christinna9031.github.io");
