@@ -52,8 +52,7 @@ method:"POST"
 .then(data => {console.log(data)
 Update (data.refresh_token)
 })
-
-                }
+}
 
 function Update (token){
 document.getElementById("text").innerHTML="<p>Your refresh token: <code>"+token+"</code> <button id='copyCred'>Copy to Clipboard</button><br>"
