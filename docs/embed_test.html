@@ -1,7 +1,28 @@
-<Html>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="background-color:black;">
+<div id="iframe">
+<iframe
+    id="url"
+    src="about:blank"
+    height="788"
+    width="1400"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="true">
+</iframe>
+</div>
+</body>
+<script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const chatId = urlParams.get('id')
+    console.log(url)
+    document.getElementById("url").src = "htt‍ps://www‍.youtube.com/live_chat?v="+chatId+"&embed_domain=christinna9031.github.io";
+</script>
+</html>
 
 
-<iframe width=700 height=200 src="htt‍ps://www‍.youtube.com/live_chat?v=ZwAjON00i90&embed_domain=christinna9031.github.io"></iframe>
-
-
-</Html>
