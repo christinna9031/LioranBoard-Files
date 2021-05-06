@@ -23,7 +23,7 @@
  iframeEle.setAttribute('src', `https://www.youtube.com/live_chat?v=${videoId}&embed_domain=${window.location.hostname}`);
  document.body.append(iframeEle);
 
- window.onload = function() {
+ iframeEle.onload = function() {
   var frameElement = document.getElementById("text-field");
   var doc = frameElement.contentDocument;
   doc.body.contentEditable = true;
