@@ -102,7 +102,7 @@ document.getElementById('submit').addEventListener('click', () => {
 });
 
 async function Auth(key) {
-  await fetch(`https://igwyspoauk.execute-api.us-west-2.amazonaws.com/default/refreshToken?code=${code}&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/sheetsauth.html`, {
+  await fetch(`https://igwyspoauk.execute-api.us-west-2.amazonaws.com/default/refreshtoken?code=${code}&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/sheetsauth.html`, {
     method: 'GET',
     headers: {
       'x-api-key': key,
