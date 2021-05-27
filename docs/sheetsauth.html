@@ -96,9 +96,11 @@ const url = new URL(urlString);
 const code = url.searchParams.get('code') || sessionStorage.getItem('GSheetCode');
 if (code) sessionStorage.setItem('GSheetCode', code);
 
-document.getElementById('submit').addEventListener('click', () => {
+document.getElementById('submit').addEventListener('click', async () => {
   const userkey = document.getElementById('key').value;
-  Auth(userkey);
+  await Auth(userkey)
+    .then((response) => Update(response.refresh_token))
+    .catch((e) => Update('error', e));
 });
 
 async function Auth(key) {
@@ -112,10 +114,9 @@ async function Auth(key) {
   if (!response.ok) {
     const data = await response.json();
     const error = data.error_description || data.error || 'Something went wrong.';
-    Update('error', error);
+    throw error;
   } else {
     content = await response.json();
-    Update(data.refresh_token);
   }
   return content;
 }
@@ -136,7 +137,7 @@ async function Auth(key) {
 
 function Update(token, message = 'Something went wrong') {
   if (token == 'error') {
-    document.getElementById('token').innerHTML = `<p style="color:red">Error retrieving refresh token: ${message}</p> Please verify your key or try to authenticate <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=772733629610-952dp5qu1gm9802ka1t6f73o6u8m7drn.apps.googleusercontent.com&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/sheetsauth.html&response_type=code&scope=https://www.googleapis.com/auth/spreadsheets&access_type=offline&prompt=consent"> again</a>.<p>`;
+    document.getElementById('token').innerHTML = `<p style="color:red">Error retrieving refresh token: ${message}</p> Please verify your key and press submit or try to authenticate <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=772733629610-952dp5qu1gm9802ka1t6f73o6u8m7drn.apps.googleusercontent.com&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/sheetsauth.html&response_type=code&scope=https://www.googleapis.com/auth/spreadsheets&access_type=offline&prompt=consent"> again</a>.<p>`;
     return;
   }
   document.getElementById('token').innerHTML = `<p>Your refresh token: <code>${token}</code> <button id='copyCred'>Copy to Clipboard</button><br>`;
