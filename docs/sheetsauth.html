@@ -10,13 +10,15 @@
 
   
   body {
-  background-color: rgb(5, 10, 34);  
+  background-color: rgb(61, 87, 219);  
   color:rgb(231, 231, 231)
   }
 
   body a {
   color:rgb(255, 187, 0)  
   }
+
+
 
   h1 {
   color:rgb(255, 187, 0)  
@@ -38,16 +40,22 @@
        white-space: -o-pre-wrap;    
        word-wrap: break-word;  
        margin: 5px 0px;    
+       color:rgb(1, 2, 7)
      }
   #info {
   display:none
+  
   }
 
   .main {
-  padding:10px;
-  margin:10px;
-  text-align: center;
-
+    box-shadow: 5px 5px 5px #1A1A1F;
+  background-color: rgb(5, 10, 34);  
+  width: 60%;
+  padding-bottom:20px;
+  padding-top:10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 0 auto;
   }
   footer {
     font-family: "Trebuchet MS";
@@ -72,9 +80,9 @@ footer a {
    <div class="text">
       <h1> Google Sheets Authentication</h1>   
   <div id="welcome">
-   <p>Welcome and thank you again for purchasing Google Sheets extension! <p> Now that you successfully authenticated your Google account, you can proceed with retrieving your refresh token.</p>
-   <p>Please provide your key you retrieved on the Itch.io purchase page:  <input type="text" size=50 id="key"> <input id="submit" type="submit"></p> 
-   <p><i>If you did not retrieve your key from the Itch.io purchase page, you can do so by clicking on the purchase link that was sent to your email.</p>
+   <p>Welcome and thank you again for purchasing Google Sheets extension! <p> Now that you've successfully authenticated your Google account, you can proceed with retrieving your refresh token.</p>
+   <p>Please provide your key you retrieved on the Itch.io purchase page:  <input type="text" size=30 id="key"> <input id="submit" type="submit"></p> 
+   <p><i>If you did not retrieve your key from the Itch.io purchase page, you can do so by clicking on the purchase confirmation link that was sent to your email.</p>
    <p>If you have any issues retrieving your key, please join our <a href="https://discord.gg/dXez8Zh"> Discord server</a> and ask for assistance.</p></i><br>
    <p></p> 
    
@@ -84,10 +92,11 @@ footer a {
     <ol>
     <li>In your Receiver, go to the Google Sheets premade deck which was created when you installed the extension. Make sure your Transmitter is running and connected. </li>
     <li>Right click on the red INIT button - edit commands. </li>
-    <li>Scroll down to Send to Extension command and paste your refresh token into the refreshToken field and your key (retrieved from Itch) into the userKey field (if you haven't done so already).</li>
+    <li>Scroll down to Send to Extension command and paste your refresh token into the refreshToken field and your key (retrieved from Itch.io) into the userKey field (if you haven't done so already).</li>
     <li>Press Done twice and follow the rest of the <a href="https://christinna9031.github.io/LBDocumentation/externalext.html#GoogleSheets">setup instructions</a>.</li> </ol></p>
-    <a href="https://gyazo.com/eb81ae66fdfbf524fdcda21ce1c78b77"><video alt="Video from Gyazo" width="1020" autoplay muted playsinline controls><source src="https://i.gyazo.com/eb81ae66fdfbf524fdcda21ce1c78b77.mp4" type="video/mp4" /></video></a>
+    <a href="https://gyazo.com/eb81ae66fdfbf524fdcda21ce1c78b77"><video alt="Video from Gyazo" width="60%" autoplay muted playsinline controls><source src="https://i.gyazo.com/eb81ae66fdfbf524fdcda21ce1c78b77.mp4" type="video/mp4" /></video></a>
   </div>
+</div>
 </div>
 
    <script>
@@ -140,7 +149,7 @@ function Update(token, message = 'Something went wrong') {
     document.getElementById('token').innerHTML = `<p style="color:red">Error retrieving refresh token: ${message}</p> Please verify your key and press submit or try to authenticate <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=772733629610-952dp5qu1gm9802ka1t6f73o6u8m7drn.apps.googleusercontent.com&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/sheetsauth.html&response_type=code&scope=https://www.googleapis.com/auth/spreadsheets&access_type=offline&prompt=consent"> again</a>.<p>`;
     return;
   }
-  document.getElementById('token').innerHTML = `<p>Your refresh token: <code>${token}</code> <button id='copyCred'>Copy to Clipboard</button><br>`;
+  document.getElementById('token').innerHTML = `<p>Your refresh token: <br> <code>${token}</code> <button id='copyCred'> <br>Copy to Clipboard</button><br>`;
 
   document.getElementById('copyCred').addEventListener('click', () => {
     CopyToClipboard(token, 'copyCred');
@@ -150,11 +159,7 @@ function Update(token, message = 'Something went wrong') {
 
 function displayContent() {
   const x = document.getElementById('info');
-  if (x.style.display === 'none') {
     x.style.display = 'block';
-  } else {
-    x.style.display = 'none';
-  }
 }
 
 function CopyToClipboard(value, name) {
