@@ -144,12 +144,13 @@ async function Auth(key) {
     .catch((e) => Update('error'));
 } */
 
+
 function Update(token, message = 'Something went wrong') {
   if (token == 'error') {
     document.getElementById('token').innerHTML = `<p style="color:red">Error retrieving refresh token: ${message}</p> Please verify your key and press submit or try to authenticate <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=772733629610-952dp5qu1gm9802ka1t6f73o6u8m7drn.apps.googleusercontent.com&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/sheetsauth.html&response_type=code&scope=https://www.googleapis.com/auth/spreadsheets&access_type=offline&prompt=consent"> again</a>.<p>`;
     return;
   }
-  document.getElementById('token').innerHTML = `<p>Your refresh token: <br> <code>${token}</code> <button id='copyCred'> <br>Copy to Clipboard</button><br>`;
+  document.getElementById('token').innerHTML = `<p>Your refresh token: <br> <code>${token}</code> <br><button id='copyCred'> Copy to Clipboard</button><br>`;
 
   document.getElementById('copyCred').addEventListener('click', () => {
     CopyToClipboard(token, 'copyCred');
