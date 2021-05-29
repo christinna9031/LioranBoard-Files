@@ -81,9 +81,9 @@ footer a {
       <h1> Google Sheets Authentication</h1>   
   <div id="welcome">
    <p>Welcome and thank you again for purchasing Google Sheets extension! <p> Now that you've successfully authenticated your Google account, you can proceed with retrieving your refresh token.</p>
-   <p>Please provide your key you retrieved on the Itch.io purchase page:  <input type="text" size=30 id="key"> <input id="submit" type="submit"></p> 
-   <p><i>If you did not retrieve your key from the Itch.io purchase page, you can do so by clicking on the purchase confirmation link that was sent to your email.</p>
-   <p>If you have any issues retrieving your key, please join our <a href="https://discord.gg/dXez8Zh"> Discord server</a> and ask for assistance.</p></i><br>
+   <p>Please provide your key you were provided on the Itch.io purchase page:  <input type="text" size=30 id="key"> <input id="submit" type="submit"></p> 
+   <p><i>If you haven't retrieved your key from the Itch.io purchase page, you can do so by clicking on the purchase confirmation link that was sent to your email.</p>
+   <p>If you have any issues retrieving your key, please join our <a href="https://discord.gg/dXez8Zh"> Discord server</a> and ask for assistance or directly DM Christinna#9031.</p></i><br>
    <p></p> 
    
   </div>
@@ -93,7 +93,7 @@ footer a {
     <li>In your Receiver, go to the Google Sheets premade deck which was created when you installed the extension. Make sure your Transmitter is running and connected. </li>
     <li>Right click on the red INIT button - edit commands. </li>
     <li>Scroll down to Send to Extension command and paste your refresh token into the refreshToken field and your key (retrieved from Itch.io) into the userKey field (if you haven't done so already).</li>
-    <li>Press Done twice and follow the rest of the <a href="https://christinna9031.github.io/LBDocumentation/externalext.html#GoogleSheets">setup instructions</a>.</li> </ol></p>
+    <li>Press Done twice and follow the rest of the <a href="https://christinna9031.github.io/LBDocumentation/externalext.html#GoogleSheets" target="_blank">setup instructions</a>.</li> </ol></p>
     <a href="https://gyazo.com/eb81ae66fdfbf524fdcda21ce1c78b77"><video alt="Video from Gyazo" width="60%" autoplay muted playsinline controls><source src="https://i.gyazo.com/eb81ae66fdfbf524fdcda21ce1c78b77.mp4" type="video/mp4" /></video></a>
   </div>
 </div>
@@ -150,7 +150,7 @@ function Update(token, message = 'Something went wrong') {
     document.getElementById('token').innerHTML = `<p style="color:red">Error retrieving refresh token: ${message}</p> Please verify your key and press submit or try to authenticate <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=772733629610-952dp5qu1gm9802ka1t6f73o6u8m7drn.apps.googleusercontent.com&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/sheetsauth.html&response_type=code&scope=https://www.googleapis.com/auth/spreadsheets&access_type=offline&prompt=consent"> again</a>.<p>`;
     return;
   }
-  document.getElementById('token').innerHTML = `<p>Your refresh token: <br> <code>${token}</code> <br><button id='copyCred'> Copy to Clipboard</button><br>`;
+  document.getElementById('token').innerHTML = `<p>Your refresh token: <br> <code>${token}</code> <br><button id='copyCred'> <br> Copy to Clipboard</button><br>`;
 
   document.getElementById('copyCred').addEventListener('click', () => {
     CopyToClipboard(token, 'copyCred');
