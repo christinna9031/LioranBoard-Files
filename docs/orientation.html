@@ -1,0 +1,11 @@
+<html>
+<div id='orientation'></div>
+<script>
+
+window.addEventListener('deviceorientation', function (evt) {
+const test = document.getElementById('orientation');
+test.innerHTML = `${evt.absolute} + ${evt.alpha} + ${evt.beta} + ${evt.gamma}`
+console.log(evt)
+});
+</script>
+</html>
