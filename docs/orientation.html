@@ -1,10 +1,20 @@
 <html>
 <div id='orientation'></div>
+<div id='devicemotion'></div>
 <script>
 
 window.addEventListener('deviceorientation', function (evt) {
 const test = document.getElementById('orientation');
 test.innerHTML = `${evt.absolute} + ${evt.alpha} + ${evt.beta} + ${evt.gamma}`
+console.log(evt)
+});
+
+window.addEventListener('devicemotion', function (event) {
+    var x = event.accelerationIncludingGravity.x;
+    var y = event.accelerationIncludingGravity.y;
+    var z = event.accelerationIncludingGravity.z;
+const test = document.getElementById('devicemotion');
+test.innerHTML = `${x} + ${y} + ${z}`
 console.log(evt)
 });
 </script>
