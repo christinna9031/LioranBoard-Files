@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>LioranBoard EventSub Extension Authorization</title>
+      <meta name="title" content="LioranBoard EventSub Authorization">
+      <meta name="description" content="Authorize LioranBoard for EventSub on Twitch.">
+      <meta name="keywords" content="lioranboard, twitch, stream, eventsub, webhook">
+      <meta name="robots" content="index, follow">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="language" content="English">
+      <meta name="author" content="Christina Kral">
+   </head>
+   <style>
+      body {
+      background-color: rgb(61, 87, 219);  
+      color:rgb(231, 231, 231)
+      }
+      body a {
+      color:rgb(255, 187, 0)  
+      }
+      .btn {
+      background: #e8ad0c;
+      -webkit-border-radius: 6;
+      -moz-border-radius: 6;
+      border-radius: 6px;
+      font-family: Arial;
+      color: #000000;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 7px 7px 7px 7px;
+      border: solid #000000 1px;
+      text-decoration: none;
+      box-shadow: 0 1px #999;
+      margin-left: 15px
+      }
+      .btn:hover {
+      background: #F08800;
+      text-decoration: none;
+      }
+      .btn:active {
+      box-shadow: 0 2px #666;
+      transform: translateY(2px);
+      }
+      h1 {
+      color:rgb(255, 187, 0)  
+      }
+      .text {
+      font-family: "Arial";
+      font-size: 16px }
+      img {
+      vertical-align:middle  
+      }
+      input {
+      margin-left:5px;
+      }
+      button {
+      margin:10px;
+      }
+      code {
+      background-color: #dbdbdb;
+      padding:1px 4px;
+      -webkit-text-size-adjust: 100%;
+      outline: 1px solid #ccc; 
+      white-space: pre-wrap;       
+      white-space: -moz-pre-wrap;  
+      white-space: -pre-wrap;      
+      white-space: -o-pre-wrap;    
+      word-wrap: break-word;  
+      margin: 5px 0px;    
+      color:rgb(1, 2, 7)
+      }
+      #info {
+      display:none
+      }
+      .main {
+      box-shadow: 5px 5px 5px #1A1A1F;
+      background-color: rgb(5, 10, 34);  
+      width: 60%;
+      padding-bottom:20px;
+      padding-top:10px;
+      padding-left: 20px;
+      padding-right: 20px;
+      margin: 0 auto;
+      }
+      footer {
+      font-family: "Trebuchet MS";
+      position: fixed;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      background-color: rgb(8, 17, 59); 
+      color: rgb(138, 159, 255);
+      text-align: center;
+      }
+      footer a {
+      color: rgb(138, 159, 255);
+      text-decoration: none;  
+      }
+   </style>
+   <body>
+      <div class="main">
+         <div class="text">
+            <h1> LioranBoard EventSub Extension Authorization</h1>
+            <div id="welcome">
+               <p>Welcome!</p>
+               <p></p>
+               EventSub requires all subscription requests to be verified by the broadcaster. </p>
+               <p> Please tick all the relevant events you wish to listen to and press Generate Link. Click on the generated link and authorize it. If you change your mind later, you can always go back to this page and redo the process! 
+               <form id='scopes' class='scopes'>
+                  <p>
+                     <input id='channel:read:polls' type="checkbox" size=30 id="key"> Twitch Polls
+                     <input id='channel:read:predictions' type="checkbox" size=30 id="key"> Twitch Predictions
+                     <input id='channel:read:hype_train' type="checkbox" size=30 id="key"> Twitch Hype Train
+                     <input id='channel:read:subscriptions' type="checkbox" size=30 id="key"> Twitch Subscription End  <input class="btn" id="submit" type="button" value="Generate Link"> 
+                  </p>
+                  <span id='link'></span>
+               </form>
+            </div>
+            <div id="token">  </div>
+         </div>
+      </div>
+      <script>
+         const urlString = window.location.href;
+         const url = new URL(urlString);
+         const success = url.searchParams.get('access_token');
+         if (success) document.getElementById('token').innerHTML = '<strong style="color:#F08800">Authorization complete! You can close this window now.</strong>';
+         
+         document.getElementById('submit').addEventListener('click', async () => {
+           const scopes = document.querySelector('form');
+           const scopesFilter = Object.values(scopes).reduce((obj, field) => { obj[field.id] = field.checked; return obj; }, {});
+           const scopesChecked = Object.keys(scopesFilter).filter((key) => scopesFilter[key] === true);
+           const query = scopesChecked.join('%20');
+           console.log(query);
+         
+           //  console.log(scopesCheck);
+           const link = document.getElementById('link');
+         
+           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token&scope=${query}' target='_blank'>https://id.twitch.tv/oauth2/authorize ?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token+id_token&scope=${query}</a>`;
+         });
+            
+      </script>
+   </body>
+   <footer>
+      <p>&copy; 2021 Christinna | <a href="https://christinna9031.itch.io/" target="_blank">Itch.io</a> | <a href="https://github.com/christinna9031" target="_blank">GitHub</a></p>
+   </footer>
+</html>
