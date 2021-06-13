@@ -16,7 +16,8 @@
       color:rgb(231, 231, 231)
       }
       body a {
-      color:rgb(255, 187, 0)  
+      color:rgb(255, 187, 0)  ;
+      word-wrap:break-word;
       }
       .btn {
       background: #e8ad0c;
@@ -113,8 +114,8 @@
                      <input id='channel:read:hype_train' type="checkbox" size=30 id="key"> Twitch Hype Train
                      <input id='channel:read:subscriptions' type="checkbox" size=30 id="key"> Twitch Subscription End  <input class="btn" id="submit" type="button" value="Generate Link"> 
                   </p>
-                  <span id='link'></span>
                </form>
+               <div id='link'></div><br>
             </div>
             <div id="token">  </div>
          </div>
@@ -135,7 +136,7 @@
            //  console.log(scopesCheck);
            const link = document.getElementById('link');
          
-           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token&scope=${query}' target='_blank'>https://id.twitch.tv/oauth2/authorize ?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token+id_token&scope=${query}</a>`;
+           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token&scope=${query}' target='_blank'>https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token&scope=${query}</a>`;
          });
             
       </script>
