@@ -123,7 +123,7 @@
       <script>
          const urlString = window.location.href;
          const url = new URL(urlString);
-         const success = url.searchParams.get('access_token');
+         const success = url.hash.search('access_token');
          if (success) document.getElementById('token').innerHTML = '<strong style="color:#F08800">Authorization complete! You can close this window now.</strong>';
          
          document.getElementById('submit').addEventListener('click', async () => {
@@ -131,15 +131,13 @@
            const scopesFilter = Object.values(scopes).reduce((obj, field) => { obj[field.id] = field.checked; return obj; }, {});
            const scopesChecked = Object.keys(scopesFilter).filter((key) => scopesFilter[key] === true);
            const query = scopesChecked.join('%20');
-           console.log(query);
          
            //  console.log(scopesCheck);
            const link = document.getElementById('link');
          
            link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token&scope=${query}' target='_blank'>https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token&scope=${query}</a>`;
          });
-            
-      </script>
+               </script>
    </body>
    <footer>
       <p>&copy; 2021 Christinna | <a href="https://christinna9031.itch.io/" target="_blank">Itch.io</a> | <a href="https://github.com/christinna9031" target="_blank">GitHub</a></p>
