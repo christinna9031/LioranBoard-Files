@@ -124,7 +124,7 @@
          const urlString = window.location.href;
          const url = new URL(urlString);
          const success = url.hash.search('access_token');
-         if (success) document.getElementById('token').innerHTML = '<strong style="color:#F08800">Authorization complete! You can close this window now.</strong>';
+         if (success != -1) document.getElementById('token').innerHTML = '<strong style="color:#F08800">Authorization complete! You can close this window now.</strong>';
          
          document.getElementById('submit').addEventListener('click', async () => {
            const scopes = document.querySelector('form');
