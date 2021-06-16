@@ -29,11 +29,16 @@
       color: #000000;
       font-size: 16px;
       font-weight: 600;
-      padding: 7px 7px 7px 7px;
+      padding: 7px 7px 7px 7px !important;
       border: solid #000000 1px;
       text-decoration: none;
       box-shadow: 0 1px #999;
-      margin-left: 15px
+      margin-left: 15px;
+      display: block;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
       }
       .btn:hover {
       background: #F08800;
@@ -97,6 +102,9 @@
       background-color: rgb(8, 17, 59); 
       color: rgb(138, 159, 255);
       text-align: center;
+      align-content:center;
+      
+      
       }
       footer a {
       color: rgb(138, 159, 255);
@@ -171,6 +179,6 @@ function CopyToClipboard(value, name) {
 
 
    <footer>
-      <p>&copy; 2021 Christinna | <a href="https://christinna9031.itch.io/" target="_blank">Itch.io</a> | <a href="https://github.com/christinna9031" target="_blank">GitHub</a></p>
+      <span>&copy; 2021 Christinna | <a href="https://christinna9031.itch.io/" target="_blank">Itch.io</a> | <a href="https://github.com/christinna9031" target="_blank">GitHub</a></span>
    </footer>
 </html>
