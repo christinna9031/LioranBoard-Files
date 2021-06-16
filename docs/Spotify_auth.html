@@ -1,61 +1,145 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">    
-<title>LioranBoard Spotify Authentication</title>
-</head>
-<style>
-.text {
-font-family: "Arial";
-font-size: 16px }
-img {
-vertical-align:middle  
-}
-code {
-    background-color: #dbdbdb;
-    padding:2px 4px;
-    -webkit-text-size-adjust: 100%;
-    outline: 1px solid #ccc; 
-        margin: 5px; 
-    white-space: pre-wrap;       
-    white-space: -moz-pre-wrap;  
-    white-space: -pre-wrap;      
-    white-space: -o-pre-wrap;    
-    word-wrap: break-word;    
-    
-  }
-</style>
-<body>
-<div class="text">
-<h1>LioranBoard Spotify Authentication (part1)</h1>
-<b>Important: This extension only works with Premium Spotify accounts. </b><br>
-<p>
-<ol>
-<li>
-Log into a developer account on Spotify: <a href="https://developer.spotify.com/dashboard/applications" target="_blank">https://developer.spotify.com/dashboard/applications</a>. This must be the same account you're using to play your Spotify music.     
-</li>    
-<li>Go to your <a href="https://developer.spotify.com/dashboard/applications">Dashboard</a> and click on this button <img src="https://i.imgur.com/mdvfl6w.png" width="200px">.</li><Br>
-<li>Fill out the necessary fields as you see fit and press create. For example: <br><br><img src="https://i.imgur.com/CxCldcP.png" width=400px></li>
-<li>You should now see your created application. (If not, go to <a href="https://developer.spotify.com/dashboard/applications">Dashboard</a> and click on your application name). Click on <img src="https://i.imgur.com/TJ4kF36.png" width="180px">.  </li> <br>
-<li>Copy and paste this: <code>https://lb-spotifytoken.herokuapp.com/callback</code> into Redirect URIs field and click on <b>Add</b>. <br><img src="https://i.imgur.com/WzldnNn.png" width="500px"> <br> Scroll down and do not forget to click on <img src="https://i.imgur.com/Ijibvbi.png" width="100px">. <Br> You can refresh you page and check if it properly saved, otherwise the next step is not going to work. </li><br>
-<li>Click on <img src="https://i.imgur.com/HqxD5Lr.png" width="200px" >, copy both your ClientId and Client Secret, paste them below and click on Authenticate. This might take a few seconds to load. You will be then prompted to authenticate your own app you just created. <br> <br>
- 
-    ClientId: <input type="text" id="clientid"> Client Secret: <input type="text"  id="clientsecret"> 
-    <button type="button" id="SpotifyAuth" style="margin: 2px 0px">Authenticate</button>
-</li>
-</ol>    
-</p>
-</div>
-<script>
+   <head>
+      <title>LioranBoard Spotify Authentication</title>
+      <meta name="title" content="LioranBoard Spotify Authentication">
+      <meta name="keywords" content="lioranboard, twitch, stream, Spotify">
+      <meta name="robots" content="index, follow">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="language" content="English">
+      <meta name="author" content="Christina Kral">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-document.getElementById("SpotifyAuth").addEventListener("click", function (){
-    let client_id= document.getElementById("clientid").value
-    let client_secret= document.getElementById("clientsecret").value
-    window.open("https://lb-spotifytoken.herokuapp.com/login?client_id="+client_id+"&client_secret="+client_secret)
+   </head>
+   <style>
+      body {
+      background-color: rgb(61, 87, 219);  
+      color:rgb(231, 231, 231)
+      }
+      body a {
+      color:rgb(255, 187, 0)  ;
+      word-wrap:break-word;
+      }
+      .btn {
+      background: #e8ad0c;
+      -webkit-border-radius: 6;
+      -moz-border-radius: 6;
+      border-radius: 6px;
+      font-family: Arial;
+      color: #000000;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 7px 7px 7px 7px;
+      border: solid #000000 1px;
+      text-decoration: none;
+      box-shadow: 0 1px #999;
+      margin-left: 15px
+      }
+      .btn:hover {
+      background: #F08800;
+      text-decoration: none;
+      }
+      .btn:active {
+      box-shadow: 0 2px #666;
+      transform: translateY(2px);
+      }
+      h1 {
+      color:rgb(255, 187, 0)  
+      }
+      .text {
+      font-family: "Arial";
+      font-size: 16px }
+      img {
+      vertical-align:middle  
+      }
+      input {
+      margin-left:5px;
+      }
+      button {
+      margin:10px;
+      }
+      code {
+      background-color: #dbdbdb;
+      padding:1px 4px;
+      -webkit-text-size-adjust: 100%;
+      outline: 1px solid #ccc; 
+      white-space: pre-wrap;       
+      white-space: -moz-pre-wrap;  
+      white-space: -pre-wrap;      
+      white-space: -o-pre-wrap;    
+      word-wrap: break-word;  
+      margin: 5px 0px;    
+      color:rgb(1, 2, 7)
+      }
+      #info {
+      display:none
+      }
+      .main {
+      box-shadow: 5px 5px 5px #1A1A1F;
+      background-color: rgb(5, 10, 34);  
+      width: 60%;
+      padding-bottom:20px;
+      padding-top:10px;
+      padding-left: 20px;
+      padding-right: 20px;
+      margin: 0 auto;
+      }
+      footer {
+      font-family: "Trebuchet MS";
+      position: fixed;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      background-color: rgb(8, 17, 59); 
+      color: rgb(138, 159, 255);
+      text-align: center;
+      }
+      footer a {
+      color: rgb(138, 159, 255);
+      text-decoration: none;  
+      }
+   </style>
+   <body>
+      <div class="main">
+         <div class="text">
+            <h1>LioranBoard Spotify Authentication (part1)</h1>
+            
+            <b>Important: To be able to use all features of this extension, you need to have a Premium Spotify account. </b><br>
+            <p>
+            <ol>
+            <li>
+            Log into a developer account on Spotify: <a href="https://developer.spotify.com/dashboard/applications" target="_blank">https://developer.spotify.com/dashboard/applications</a>. This must be the same account you're using to play your Spotify music.     
+            </li>    
+            <li>Go to your <a href="https://developer.spotify.com/dashboard/applications">Dashboard</a> and click on this button <img src="https://i.imgur.com/mdvfl6w.png" class="figure-img img-fluid rounded w-10" width="200px">.</li><Br>
+            <li>Fill out the necessary fields as you see fit and press create. For example: <br><br>
+                    <img src="https://i.imgur.com/CxCldcP.png" class="figure-img img-fluid rounded w-50">
+                    </a></li><br>
+               
+                
+            <li><p>You should now see your created application. (If not, go to <a href="https://developer.spotify.com/dashboard/applications">Dashboard</a> and click on your application name). </li>
+            <li><p>Spotify newly added 'Users and Access' button to the settings. Click on it. (If you cannot see it, try deleting your browser cache or temporarily switching to a different browser.) Click on 'Add New User' and fill out your name and Spotify email address. Press Add. <br> <br> <img src="https://i.imgur.com/OPZ3N9E.png" class="figure-img img-fluid rounded w-60"> </li>   
+             <li>   Click on <img src="https://i.imgur.com/TJ4kF36.png" class="figure-img img-fluid rounded w-5" width="180px" ><br>
+            <li>Copy and paste this: <code>https://lb-spotifytoken.herokuapp.com/callback</code> into Redirect URIs field and click on <b>Add</b>. <p><br><img src="https://i.imgur.com/WzldnNn.png" class="figure-img img-fluid rounded w-60"> <br> Scroll down and do not forget to click on <img src="https://i.imgur.com/Ijibvbi.png" width="100px">. <Br> You can refresh you page and check if it properly saved, otherwise the next step is not going to work. </li>
+            <li>Click on <img src="https://i.imgur.com/HqxD5Lr.png" width="200px" >, copy both your ClientId and Client Secret, paste them below and click on Authenticate. This might take a few seconds to load. You will be then prompted to authenticate your own app you just created. <br> <br>
+             
+                ClientId: <input type="text" id="clientid"> Client Secret: <input type="text"  id="clientsecret"> 
+                <button type="button" id="SpotifyAuth" style="margin: 2px 0px">Authenticate</button>
+            </li>
+            </ol>    
+            </p><br><br><br>
+            </div>
+            <script>
+                        document.getElementById('SpotifyAuth').addEventListener('click', () => {
+  const client_id = document.getElementById('clientid').value;
+  const client_secret = document.getElementById('clientsecret').value;
+  window.open(`https://lb-spotifytoken.herokuapp.com/login?client_id=${client_id}&client_secret=${client_secret}`);
+});
+                        </script>  
+   </body>
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
-})
-
-</script>  
-<script>$(document.links).filter(function() {return this.hostname != window.location.hostname;}).attr('target', '_blank');</script>
-</body> 
+   <footer>
+      <p>&copy; 2021 Christinna | <a href="https://christinna9031.itch.io/" target="_blank">Itch.io</a> | <a href="https://github.com/christinna9031" target="_blank">GitHub</a></p>
+   </footer>
 </html>

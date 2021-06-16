@@ -1,93 +1,172 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">    
-<title>LioranBoard Spotify Authentication</title>
-            <style>
-                .text {
-                font-family: "Arial";
-                font-size: 16px }
-                img {
-                vertical-align:middle  
-                }
-                code {
-                    background-color: #dbdbdb;
-                    padding:1px 4px;
-                    -webkit-text-size-adjust: 100%;
-                    outline: 1px solid #ccc; 
-                    white-space: pre-wrap;       
-                    white-space: -moz-pre-wrap;  
-                    white-space: -pre-wrap;      
-                    white-space: -o-pre-wrap;    
-                    word-wrap: break-word;  
-                    margin: 5px 0px;
-                    
-                  }
-                </style>
-        </head>
-        <body>
-        <div class="text">
+   <head>
+      <title>LioranBoard Spotify Authentication (2)</title>
+      <meta name="title" content="LioranBoard Spotify Authentication">
+      <meta name="keywords" content="lioranboard, twitch, stream, Spotify">
+      <meta name="robots" content="index, follow">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="language" content="English">
+      <meta name="author" content="Christina Kral">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+   </head>
+   <style>
+      body {
+      background-color: rgb(61, 87, 219);  
+      color:rgb(231, 231, 231)
+      }
+      body a {
+      color:rgb(255, 187, 0)  ;
+      word-wrap:break-word;
+      }
+      .btn {
+      background: #e8ad0c;
+      -webkit-border-radius: 6;
+      -moz-border-radius: 6;
+      border-radius: 6px;
+      font-family: Arial;
+      color: #000000;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 7px 7px 7px 7px;
+      border: solid #000000 1px;
+      text-decoration: none;
+      box-shadow: 0 1px #999;
+      margin-left: 15px
+      }
+      .btn:hover {
+      background: #F08800;
+      text-decoration: none;
+      }
+      .btn:active {
+      box-shadow: 0 2px #666;
+      transform: translateY(2px);
+      }
+      h1 {
+      color:rgb(255, 187, 0)  
+      }
+      .text {
+      font-family: "Arial";
+      font-size: 16px }
+      img {
+      vertical-align:middle  
+      }
+      input {
+      margin-left:5px;
+      }
+      button {
+      margin:10px;
+      }
+      code {
+      background-color: #dbdbdb;
+      padding:1px 4px;
+      -webkit-text-size-adjust: 100%;
+      outline: 1px solid #ccc; 
+      white-space: pre-wrap;       
+      white-space: -moz-pre-wrap;  
+      white-space: -pre-wrap;      
+      white-space: -o-pre-wrap;    
+      word-wrap: break-word;  
+      margin: 5px 0px;    
+      color:rgb(1, 2, 7)
+      }
+      #info {
+      display:none
+      }
+      .main {
+      box-shadow: 5px 5px 5px #1A1A1F;
+      background-color: rgb(5, 10, 34);  
+      width: 60%;
+      padding-bottom:20px;
+      padding-top:10px;
+      padding-left: 20px;
+      padding-right: 20px;
+      margin: 0 auto;
+      }
+      footer {
+      font-family: "Trebuchet MS";
+      position: fixed;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      background-color: rgb(8, 17, 59); 
+      color: rgb(138, 159, 255);
+      text-align: center;
+      }
+      footer a {
+      color: rgb(138, 159, 255);
+      text-decoration: none;  
+      }
+   </style>
+   <body>
+      <div class="main">
+         <div class="text">
             <h1> LioranBoard Spotify Authentication (part 2) </h1>   
-        <div  id="text">
-        
-        </div>
-        <div>
-        <p>
-        <ol>
-        <li>
-        Right click on the red Spotify switch button in your Spotify premade deck in your Receiver - Edit commands.  <img src="https://i.imgur.com/4Boc3Vi.png" width="50px"> <br> Scroll down until you see Send to Extension command and edit these values: <img src="https://i.imgur.com/rNP30YF.png" > </li><br>
-        <li>
-            <code>credentials</code> = credentials you just obtained <br> 
-           <code>refresh token</code> = your refresh token you just obtained<br>
-            <code>last_track</code> = do not modify (it's for the extension to check the last song played in LB's memory in case you reload Transmitter) <br>
-            <code>device_type</code> = device type you want to control your Spotify on. If left on default, it will get the first device it finds. <br>
-            <code>device_id</code> = device ID (in case you have multiple of the same types). If you fill out all the previous values (press Done twice) and press the red Spotify switch button, your device_id will be shown in your Transmitter (in the Spotify tab). You can then copy and paste it from there. Leave blank if you have only one Spotify device type. 
+            <div  id="text">
+            
+            </div>
+            <div>
+            <p>
+            <ol>
+            <li>
+            Right click on the red Spotify switch button in your Spotify premade deck in your Receiver - Edit commands.  <img src="https://i.imgur.com/4Boc3Vi.png" width="50px"> <br> Scroll down until you see Send to Extension command and edit these values: <img src="https://i.imgur.com/rNP30YF.png" class="figure-img img-fluid rounded w-80" > </li><br>
+            <li>
+                <code>credentials</code> = credentials you just obtained <br> 
+               <code>refresh token</code> = your refresh token you just obtained<br>
+                <code>last_track</code> = do not modify (it's for the extension to check the last song played in LB's memory in case you reload Transmitter) <br>
+                <code>device_type</code> = device type you want to control your Spotify on. If left on default, it will get the first device it finds. <br>
+                <code>device_id</code> = device ID (in case you have multiple of the same types). If you fill out all the previous values (press Done twice) and press the red Spotify switch button, your device_id will be shown in your Transmitter (in the Spotify tab). You can then copy and paste it from there. Leave blank if you have only one Spotify device type. 
+    
+              
+            </li>
+            <li>Click on Done and then Done again. </li>
+            <li>Reload your Transmitter or press the red switch button. You should not need to press it again as it will get automatically initiated if you open/restar Transmitter.</li>
+            <li>Your extension should automatically connect to Spotify now. </li>
+                </ol>
+    
+           <p>
+               <i>Note: If you do not see crendetials and refresh token or it says undefined/null, you did something wrong in the previous steps. Return to the first page and repeat the process. </i>
+           </p>
+            </p>
+    
+            </div></div>   
+            
+    
+    <script>
+        const url_string = window.location.href;
+const url = new URL(url_string);
+const refresh_token = url.searchParams.get('refresh_token');
+const credentials = url.searchParams.get('id');
 
-          
-        </li>
-        <li>Click on Done and then Done again. </li>
-        <li>Reload your Transmitter or press the red switch button. You should not need to press it again as it will get automatically initiated if you open/restar Transmitter.</li>
-        <li>Your extension should automatically connect to Spotify now. </li>
-            </ol>
+document.getElementById('text').innerHTML = `<p>Your credentials: <code>${credentials}</code> <button id='copyCred'>Copy to Clipboard</button><br> Your refresh token: <code>${refresh_token}</code><button id='copytoken'>Copy to Clipboard</button></p>`;
 
-       <p>
-           <i>Note: If you do not see crendetials and refresh token or it says undefined/null, you did something wrong in the previous steps. Return to the first page and repeat the process. </i>
-       </p>
-        </p>
+document.getElementById('copyCred').addEventListener('click', () => {
+  CopyToClipboard(credentials, 'copyCred');
+});
 
-        </div></div>   
-        
+document.getElementById('copytoken').addEventListener('click', () => {
+  CopyToClipboard(refresh_token, 'copytoken');
+});
 
-<script>
-
-let url_string = window.location.href
-let url = new URL(url_string);
-let refresh_token = url.searchParams.get("refresh_token");
-let credentials = url.searchParams.get("id");
-
-document.getElementById("text").innerHTML="<p>Your credentials: <code>"+credentials+"</code> <button id='copyCred'>Copy to Clipboard</button><br><br> Your refresh token: <code>"+refresh_token+"</code><button id='copytoken'>Copy to Clipboard</button></p>"
-
-document.getElementById("copyCred").addEventListener("click", function (){
-    CopyToClipboard (credentials,'copyCred')
-})
-
-document.getElementById("copytoken").addEventListener("click", function (){
-    CopyToClipboard (refresh_token,'copytoken')
-})
-
-function CopyToClipboard (value,name){
-    let copyhelper = document.createElement("input");
-          copyhelper.className = 'copyhelper'
-          document.body.appendChild(copyhelper);
-          copyhelper.value = value;
-          copyhelper.select();
-          document.execCommand("copy");
-          document.body.removeChild(copyhelper);
-          let button=document.querySelector("#"+name)
-          button.innerHTML = "Copied to Clipboard";
-
+function CopyToClipboard(value, name) {
+  const copyhelper = document.createElement('input');
+  copyhelper.className = 'copyhelper';
+  document.body.appendChild(copyhelper);
+  copyhelper.value = value;
+  copyhelper.select();
+  document.execCommand('copy');
+  document.body.removeChild(copyhelper);
+  const button = document.querySelector(`#${name}`);
+  button.innerHTML = 'Copied to Clipboard';
 }
+        </script>   
+   </body>
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
-</script>   
-</body>
+
+   <footer>
+      <p>&copy; 2021 Christinna | <a href="https://christinna9031.itch.io/" target="_blank">Itch.io</a> | <a href="https://github.com/christinna9031" target="_blank">GitHub</a></p>
+   </footer>
 </html>
