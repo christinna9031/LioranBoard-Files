@@ -128,9 +128,9 @@
          let refreshTime;
 
          if (success != -1) {
-         let time = 60;
+         let time = 120;
          refreshTime = setInterval(() => {
-         output.innerHTML = `<strong style='color:#F08800'>Waiting for ${time} seconds to create subscription. Please do not close or refresh this page.</strong>`;
+         output.innerHTML = `<strong style='color:#F08800'>SUCCESSFULLY AUTHORIZED! Waiting for ${time} seconds to create subscription. Please do not close or refresh this page.</strong> <p><i>This is due to Twitch's delay between authorizing the app and allowing it to create new subscriptions. </p> <p> If you still encounter 'subscription missing proper authorization' error, try refreshing the page or redoing the whole process from the beginning. </i> </p>`;
          time -= 1;
          }, 1000);
          setTimeout(createSubscription, 60000);
