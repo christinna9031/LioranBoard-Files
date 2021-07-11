@@ -156,7 +156,7 @@
          .then((responses) => {
             output.innerHTML = '<strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. <br> Log: </strong>';
          responses.forEach((response) => {
-         output.innerHTML += response;
+         output.innerHTML += JSON.stringify(response);
          });
          })
          .catch((e) =>  output.innerHTML = `<strong style="color:#F08800">Error trying to create a subscription: ${e} <br> </strong>`);
