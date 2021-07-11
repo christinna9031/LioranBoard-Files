@@ -154,7 +154,7 @@
          const requests = queries.map((query) => fetchSubscription(jwt, itchKey, query));
          Promise.all(requests)
          .then((responses) => {
-            output.innerHTML = '<p><strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. </p><br><p> Log: </strong>';
+            output.innerHTML = '<p><strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. </p><p> Log: </strong>';
          responses.forEach((response) => {
          output.innerHTML += `${JSON.stringify(response)}<br>`;
          });
