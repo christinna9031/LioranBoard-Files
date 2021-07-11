@@ -187,7 +187,7 @@
            //  console.log(scopesCheck);
            const link = document.getElementById('link');
          
-           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid&${query}'>https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid&${query}</a>`;
+           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query}'>https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query}</a>`;
          });
 
          async function fetchSubscription(jwt, itchKey, query) {
