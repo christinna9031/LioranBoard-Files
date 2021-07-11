@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html>
+<html style="height:100%;">
    <head>
       <title>LioranBoard EventSub Extension Authorization</title>
       <meta name="title" content="LioranBoard EventSub Authorization">
@@ -9,15 +9,21 @@
       <meta name="robots" content="index, follow">
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="language" content="English">
-      <meta name="author" content="Christina Kral">
+      <meta name="author" content="Christina K">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/christinna9031/LioranBoard-Files@main/lib/bootstrap.min.css">
+
    </head>
    <style>
       body {
       background-color: rgb(61, 87, 219);  
-      color:rgb(231, 231, 231)
+      color:rgb(231, 231, 231);
       }
       body a {
       color:rgb(255, 187, 0)  ;
+      word-wrap:break-word;
+      }
+      body a:hover {
+      color:#F08800  ;
       word-wrap:break-word;
       }
       .btn {
@@ -38,12 +44,13 @@
       .btn:hover {
       background: #F08800;
       text-decoration: none;
+      color:black
       }
       .btn:active {
       box-shadow: 0 2px #666;
       transform: translateY(2px);
       }
-      h1 {
+      h2 {
       color:rgb(255, 187, 0)  
       }
       .text {
@@ -74,35 +81,12 @@
       #info {
       display:none
       }
-      .main {
-      box-shadow: 5px 5px 5px #1A1A1F;
-      background-color: rgb(5, 10, 34);  
-      width: 60%;
-      padding-bottom:20px;
-      padding-top:10px;
-      padding-left: 20px;
-      padding-right: 20px;
-      margin: 0 auto;
-      }
-      footer {
-      font-family: "Trebuchet MS";
-      position: fixed;
-      width: 100%;
-      left: 0;
-      bottom: 0;
-      background-color: rgb(8, 17, 59); 
-      color: rgb(138, 159, 255);
-      text-align: center;
-      }
-      footer a {
-      color: rgb(138, 159, 255);
-      text-decoration: none;  
-      }
    </style>
-   <body>
-      <div class="main">
-         <div class="text">
-            <h1> LioranBoard EventSub Extension Authorization</h1>
+   <body class="d-flex flex-column h-100">
+      <div id="main" class="container clear-top bg-dark flex-grow-1">
+         <div class="row justify-content-center">
+      <h2 class="text-center"> LioranBoard EventSub Extension Authorization </h2>
+            
             <div id="welcome">
                <p>Welcome!</p>
                <p></p>
@@ -123,7 +107,15 @@
             </div>
             <div id="token">  </div>
          </div>
+ 
       </div>
+   <footer >
+      <div class="container">
+         <div class="row bg-dark">
+            <div class="col text-center">
+      <p>&copy; 2021 Christinna | <a href="https://christinna9031.itch.io/" target="_blank">Itch.io</a> | <a href="https://github.com/christinna9031" target="_blank">GitHub</a></p></div></div></div></footer>
+   </footer>
+</body>
       <script>
          /* eslint-disable indent */
          const urlString = window.location.href;
@@ -210,8 +202,6 @@
   return content;
 }
                </script>
-   </body>
-   <footer>
-      <p>&copy; 2021 Christinna | <a href="https://christinna9031.itch.io/" target="_blank">Itch.io</a> | <a href="https://github.com/christinna9031" target="_blank">GitHub</a></p>
-   </footer>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </html>
