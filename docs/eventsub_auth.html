@@ -125,6 +125,11 @@
          const url = new URL(urlString);
          const success = url.hash.search('access_token');
          const output = document.getElementById('token');
+         const itchKey = localStorage.getItem('itchKeyEventSub');
+         if (itchKey) {
+         const itchKeyElem = document.getElementById('itchKey');
+         itchKeyElem.value = itchKey;
+}
          let refreshTime;
 
          if (success != -1) {
@@ -149,8 +154,6 @@
          }
          if (!jwt) { document.getElementById('token').innerHTML = '<strong style="color:#F08800">Authorization failed, no JWT token found! Please click on Generate Link and authorize Twitch again!</strong>'; return; }
 
-         const itchKey = localStorage.getItem('itchKeyEventSub');
-         
          const types = localStorage.getItem('EventSubTypes');
          const queries = [];
          if (types.includes('channel:read:predictions')) queries.push('channel.prediction.begin', 'channel.prediction.progress', 'channel.prediction.lock', 'channel.prediction.end');
