@@ -117,7 +117,7 @@ async function Auth(key) {
 
 function Update(token, message = 'Something went wrong') {
   if (token == 'error') {
-    document.getElementById('token').innerHTML = `<p style="color:red">Error retrieving refresh token: ${message}</p> Please try to authenticate again your YouTube account again <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=777753337212-ijh2ablbkkcn3tpg2fqoq4ap5cs56bgq.apps.googleusercontent.com&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/youtube_auth.html&response_type=code&scope=https://www.googleapis.com/auth/youtube&access_type=offline&prompt=consent"> again</a>.<p>`;
+    document.getElementById('token').innerHTML = `<p style="color:red">Error retrieving refresh token: ${message}</p> Please try to authenticate your YouTube account <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=777753337212-ijh2ablbkkcn3tpg2fqoq4ap5cs56bgq.apps.googleusercontent.com&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/youtube_auth.html&response_type=code&scope=https://www.googleapis.com/auth/youtube&access_type=offline&prompt=consent"> again</a>.<p>`;
     return;
   }
   document.getElementById('token').innerHTML = `<p>Your refresh token: <br> <code>${token}</code> <br><br><button id='copyCred'>Copy to Clipboard</button><br>`;
