@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html style="height:100%;">
+   <head>
+      <title>LioranBoard EventSub Extension Authorization</title>
+      <meta name="title" content="LioranBoard EventSub Authorization">
+      <meta name="description" content="Authorize LioranBoard for EventSub on Twitch.">
+      <meta name="keywords" content="lioranboard, twitch, stream, eventsub, webhook">
+      <meta name="robots" content="index, follow">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="language" content="English">
+      <meta name="author" content="Christina K">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/christinna9031/LioranBoard-Files@main/lib/bootstrap.min.css">
+   </head>
+   <style>
+      body {
+      background-color: rgb(61, 87, 219);  
+      color:rgb(231, 231, 231);
+      }
+      body a {
+      color:rgb(255, 187, 0)  ;
+      word-wrap:break-word;
+      }
+      body a:hover {
+      color:#F08800  ;
+      word-wrap:break-word;
+      }
+      #main, #footer {
+      background-color:#050a22
+      }
+      .btn {
+      background: #e8ad0c;
+      -webkit-border-radius: 6;
+      -moz-border-radius: 6;
+      border-radius: 6px;
+      font-family: Arial;
+      color: #000000;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 7px 7px 7px 7px;
+      border: solid #000000 1px;
+      text-decoration: none;
+      box-shadow: 0 1px #999;
+      margin-left: 15px
+      }
+      .btn:hover {
+      background: #F08800;
+      text-decoration: none;
+      color:black
+      }
+      .btn:active {
+      box-shadow: 0 2px #666;
+      transform: translateY(2px);
+      }
+      h2 {
+      color:rgb(255, 187, 0)  
+      }
+      .text {
+      font-family: "Arial";
+      font-size: 16px }
+      img {
+      vertical-align:middle  
+      }
+      input {
+      margin-left:5px;
+      }
+      button {
+      margin:10px;
+      }
+      code {
+      background-color: #dbdbdb;
+      padding:1px 4px;
+      -webkit-text-size-adjust: 100%;
+      outline: 1px solid #ccc; 
+      white-space: pre-wrap;       
+      white-space: -moz-pre-wrap;  
+      white-space: -pre-wrap;      
+      white-space: -o-pre-wrap;    
+      word-wrap: break-word;  
+      margin: 5px 0px;    
+      color:rgb(1, 2, 7)
+      }
+      #info {
+      display:none
+      }
+   </style>
+   <body class="d-flex flex-column h-100">
+      <div id="main" class="container clear-top flex-grow-1">
+         <div class="row justify-content-center">
+      <h2 class="text-center"> LioranBoard EventSub Extension Authorization </h2>
+            
+            <div id="welcome">
+               <p>Welcome!</p>
+               <p></p>
+               <p>Please provide your key you were given on the Itch.io purchase page:  <input type="text" size=30 id="itchKey"> 
+               <p><i>If you haven't retrieved your key from the Itch.io purchase page, you can do so by clicking on the purchase confirmation link that was sent to your email. If you have any issues retrieving your key, please join our <a href="https://discord.gg/dXez8Zh"> Discord server</a> and ask for assistance.</p></i> 
+               <p> Please tick all the relevant events you wish to listen to and press Generate Link. Click on the generated link and authorize it. If you change your mind later, you can always come back to this page and add more! <br>
+               <p><i>If you wish to unsubscribe, you can do so by going to <a href="https://www.twitch.tv/settings/connections">Twitch Settings - Connections</a> and disconnecting LioranBoard-Eventsub app. Repeat this process to subscribe again. </i></p>
+
+               <form id='scopes' class='scopes'>
+                  <p>
+                     <input id='channel.follow' type="checkbox" size=30 id="key"> Followers
+                     <input id='channel:read:polls' type="checkbox" size=30 id="key"> Polls
+                     <input id='channel:read:predictions' type="checkbox" size=30 id="key"> Predictions
+                     <input id='channel:read:hype_train' type="checkbox" size=30 id="key"> Hype Trains
+                     <input class="btn" id="submit" type="button" value="Generate Link"> 
+                  </p>
+               </form>
+               <div id='link'></div><br>
+            </div>
+            <div id="token">  </div> <br> <br>
+         </div>
+ 
+      </div>
+   <footer >
+      <div class="container">
+         <div id="footer" class="row">
+            <div class="col text-center">
+      <p>&copy; 2021 Christinna | <a href="https://christinna9031.itch.io/" target="_blank">Itch.io</a> | <a href="https://github.com/christinna9031" target="_blank">GitHub</a></p></div></div></div></footer>
+   </footer>
+</body>
+      <script>
+         const urlString = window.location.href;
+         const url = new URL(urlString);
+         const success = url.hash.search('access_token');
+         const output = document.getElementById('token');
+         const itchKey = localStorage.getItem('itchKeyEventSub');
+         if (itchKey) {
+           const itchKeyElem = document.getElementById('itchKey');
+           itchKeyElem.value = itchKey;
+         }
+         let refreshTime;
+         if (success != -1) {
+           let time = 10;
+           refreshTime = setInterval(() => {
+             output.innerHTML = `<strong style='color:#F08800'>SUCCESSFULLY AUTHORIZED! Waiting for ${time} seconds to create subscription. Please do not close or refresh this page.</strong>`;
+             time -= 1;
+           }, 1000);
+           setTimeout(createSubscription, 5000);
+         }
+
+         function createSubscription() {
+           clearInterval(refreshTime);
+           const hash = url.hash.substr(1).split('&');
+           let jwt;
+
+           for (let i = 0; i < hash.length; i++) {
+             if (hash[i].includes('id_token')) {
+               jwt = hash[i].split('=')[1];
+               break;
+             }
+           }
+           if (!jwt) {
+             document.getElementById('token').innerHTML = '<strong style="color:#F08800">Authorization failed, no JWT token found! Please click on Generate Link and authorize Twitch again!</strong>';
+             return;
+           }
+
+           const types = localStorage.getItem('EventSubTypes');
+           const queries = [];
+           if (types.includes('channel.follow')) queries.push('channel.follow');
+           if (types.includes('channel:read:predictions')) queries.push('channel.prediction.begin', 'channel.prediction.progress', 'channel.prediction.lock', 'channel.prediction.end');
+           if (types.includes('channel:read:hype_train')) queries.push('channel.hype_train.begin', 'channel.hype_train.progress', 'channel.hype_train.end');
+           if (types.includes('channel:read:polls')) queries.push('channel.poll.begin', 'channel.poll.progress', 'channel.poll.end');
+           const requests = queries.map((query) => fetchSubscription(jwt, itchKey, query));
+           Promise.all(requests)
+             .then((responses) => {
+               output.innerHTML = '<p><strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. In the generated log below, you should see "Verificaton pending". Your extension should now receive all events you subscribed for. (You can close this page and continue with the setup.) </p><p> Log: </strong>';
+               responses.forEach((response) => {
+                 output.innerHTML += `${JSON.stringify(response)}<br>`;
+               });
+             })
+             .catch((e) => output.innerHTML = `<strong style="color:#F08800">Error trying to create a subscription: ${e} <br> </strong>`);
+         }
+
+         document.getElementById('submit').addEventListener('click', async () => {
+           const itchKey = document.getElementById('itchKey').value;
+           if (itchKey.length > 1) localStorage.setItem('itchKeyEventSub', itchKey);
+           const scopes = document.querySelector('form');
+           const scopesFilter = Object.values(scopes).reduce((obj, field) => {
+             obj[field.id] = field.checked;
+             return obj;
+           }, {});
+           const scopesChecked = Object.keys(scopesFilter).filter((key) => scopesFilter[key] === true);
+           const query = scopesChecked.join('%20');
+           if (query.length > 1) localStorage.setItem('EventSubTypes', query);
+
+           //  console.log(scopesCheck);
+           const link = document.getElementById('link');
+
+           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query}'>https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query}</a>`;
+         });
+
+         async function fetchSubscription(jwt, itchKey, query) {
+           const method = 'POST';
+           const baseUri = 'https://8bdgdsrj5m.execute-api.us-west-2.amazonaws.com/test/subscribe?type=';
+           const headers = {
+             authorization: jwt,
+             'x-api-key': itchKey,
+           };
+
+           const response = await fetch(baseUri + query, {
+             method,
+             headers,
+           });
+           let content;
+           if (!response.ok) {
+             const data = await response.json();
+             if (data.status === 409) content = data;
+             else {
+               const error = data.message || data.error || 'Something went wrong.';
+               throw error;
+             }
+           } else {
+             content = await response.json();
+           }
+           return content;
+         }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</html>
