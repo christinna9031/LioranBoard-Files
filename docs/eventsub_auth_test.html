@@ -186,7 +186,8 @@
              obj[field.id] = field.checked;
              return obj;
            }, {});
-           const scopesChecked = Object.keys(scopesFilter).filter((key) => scopesFilter[key] === true);
+
+           const scopesChecked = Object.keys(scopesFilter).filter((key) => scopesFilter[key] === true && scopesFilter[key] !== 'channel.follow');
            const query = scopesChecked.join('%20');
            if (query.length > 1) localStorage.setItem('EventSubTypes', query);
 
