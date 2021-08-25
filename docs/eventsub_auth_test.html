@@ -107,7 +107,10 @@
                </form>
                <div id='link'></div><br>
             </div>
-            <div id="token">  </div> <br> <br>
+            <div id="token">  </div>
+            <div id="channelID">  </div>
+            <div id="log">  </div>
+            <br> <br>
          </div>
  
       </div>
@@ -123,6 +126,8 @@
          const url = new URL(urlString);
          const success = url.hash.search('access_token');
          const output = document.getElementById('token');
+         const channelID = document.getElementById('channelID');
+         const log = document.getElementById('log');
          const itchKey = localStorage.getItem('itchKeyEventSub');
          if (itchKey) {
            const itchKeyElem = document.getElementById('itchKey');
@@ -165,7 +170,8 @@
              .then((responses) => {
                output.innerHTML = '<p><strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. In the generated log below, you should see "Verificaton pending". Your extension should now receive all events you subscribed for. (You can close this page and continue with the setup.) </p><p> Log: </strong>';
                responses.forEach((response) => {
-                 output.innerHTML += `${JSON.stringify(response)}<br>`;
+                 log.innerHTML += `${JSON.stringify(response.body) || JSON.stringify(response)}<br>`;
+                 if (response.body) channelID.innerHTML = `<p><strong style="color:#F08800"> Channel ID: </strong> ${response.body.channel_id}<ul> <li> In your Eventsub premade deck, right click on the INIT button -> edit. </li> <li> Scroll down and copy paste the channel ID into <code>channel_id</code> field. </li> <li> Press Done and then Done again.</li></ul>`;
                });
              })
              .catch((e) => output.innerHTML = `<strong style="color:#F08800">Error trying to create a subscription: ${e} <br> </strong>`);
