@@ -169,7 +169,7 @@
            Promise.all(requests)
              .then((responses) => {
                output.innerHTML = '<p><strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. In the generated log below, you should see "Verification pending" or "subscription already exists". Your extension should now receive all events you subscribed for. <br></strong> <i></i>  </p>';
-               log.innerHTML = '<p><strong style="color:#F08800> Log: </strong></p>'
+               log.innerHTML = '<p><strong style="color:#F08800> Log: </strong></p>';
                responses.forEach((response) => {
                  log.innerHTML += `${JSON.stringify(response.body) || JSON.stringify(response)}<br>`;
                  if (response.body) channelID.innerHTML = `<p><strong style="color:#F08800"> Channel ID: </strong> ${response.body.channel_id}<ol> <li> In the Eventsub premade deck in your Receiver, right click on the INIT button -> edit. </li> <li> Scroll down and copy paste the channel ID into <code>channel_id</code> field. </li> <li> Press Done and then Done again.</li><li>Continue with the rest of the <a href="https://christinna9031.github.io/LBDocumentation/twitchext.html#eventsub">setup</a>. </li></ol>`;
@@ -186,13 +186,13 @@
              obj[field.id] = field.checked;
              return obj;
            }, {});
-           const scopesChecked = Object.keys(scopesFilter).filter((key) => scopesFilter[key] === true && scopesFilter[key] !== 'channel.follow');
-           let query = scopesChecked.join('%20');
-           if (query.length > 1) localStorage.setItem('EventSubTypes', query);
-           //  console.log(scopesCheck);
+           const scopesChecked = Object.keys(scopesFilter).filter((key) => scopesFilter[key] === true);
+           if (scopesChecked.length > 1) localStorage.setItem('EventSubTypes', scopesChecked);
+           if (scopesChecked.indexOf('channel.follow') != -1) scopesChecked.splice(scopesChecked.indexOf('channel.follow', 1));
+           const query = `%20${scopesChecked.join('%20')}`;
            const link = document.getElementById('link');
 
-           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query}'>https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query.replace('channel.follow','user_read')}</a>`;
+           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid${query}'>https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query.replace('channel.follow', 'user_read')}</a>`;
          });
 
          async function fetchSubscription(jwt, itchKey, query) {
