@@ -107,8 +107,8 @@
                </form>
                <div id='link'></div><br>
             </div>
-            <div id="token">  </div>
             <div id="channelID">  </div>
+            <div id="token">  </div>
             <div id="log">  </div>
             <br> <br>
          </div>
@@ -168,11 +168,11 @@
            const requests = queries.map((query) => fetchSubscription(jwt, itchKey, query));
            Promise.all(requests)
              .then((responses) => {
-               output.innerHTML = '<p><strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. In the generated log below, you should see "Verificaton pending". Your extension should now receive all events you subscribed for. <br></strong> <i>(You can close this page and continue with the setup.)</i>  </p>';
-               log.innerHTML = '<p><strong> Log: </strong></p>'
+               output.innerHTML = '<p><strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. In the generated log below, you should see "Verificaton pending". Your extension should now receive all events you subscribed for. <br></strong> <i></i>  </p>';
+               log.innerHTML = '<p><strong style="color:#F08800> Log: </strong></p>'
                responses.forEach((response) => {
                  log.innerHTML += `${JSON.stringify(response.body) || JSON.stringify(response)}<br>`;
-                 if (response.body) channelID.innerHTML = `<p><strong style="color:#F08800"> Channel ID: </strong> ${response.body.channel_id}<ul> <li> In the Eventsub premade deck in your Receiver, right click on the INIT button -> edit. </li> <li> Scroll down and copy paste the channel ID into <code>channel_id</code> field. </li> <li> Press Done and then Done again.</li></ul>`;
+                 if (response.body) channelID.innerHTML = `<p><strong style="color:#F08800"> Channel ID: </strong> ${response.body.channel_id}<ol> <li> In the Eventsub premade deck in your Receiver, right click on the INIT button -> edit. </li> <li> Scroll down and copy paste the channel ID into <code>channel_id</code> field. </li> <li> Press Done and then Done again.</li><li>Continue with the rest of the <a href="https://christinna9031.github.io/LBDocumentation/twitchext.html#eventsub">setup</a>. </li></ol>`;
                });
              })
              .catch((e) => output.innerHTML = `<strong style="color:#F08800">Error trying to create a subscription: ${e} <br> </strong>`);
