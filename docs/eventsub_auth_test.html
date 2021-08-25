@@ -135,7 +135,7 @@
          }
          let refreshTime;
          if (success != -1) {
-           let time = 10;
+           let time = 5;
            refreshTime = setInterval(() => {
              output.innerHTML = `<strong style='color:#F08800'>SUCCESSFULLY AUTHORIZED! Waiting for ${time} seconds to create subscription. Please do not close or refresh this page.</strong>`;
              time -= 1;
@@ -168,7 +168,7 @@
            const requests = queries.map((query) => fetchSubscription(jwt, itchKey, query));
            Promise.all(requests)
              .then((responses) => {
-               output.innerHTML = '<p><strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. In the generated log below, you should see "Verificaton pending". Your extension should now receive all events you subscribed for. <br></strong> <i></i>  </p>';
+               output.innerHTML = '<p><strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. In the generated log below, you should see "Verificaton pending" or "subscription already exists". Your extension should now receive all events you subscribed for. <br></strong> <i></i>  </p>';
                log.innerHTML = '<p><strong style="color:#F08800> Log: </strong></p>'
                responses.forEach((response) => {
                  log.innerHTML += `${JSON.stringify(response.body) || JSON.stringify(response)}<br>`;
