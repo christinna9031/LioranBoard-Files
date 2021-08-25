@@ -186,15 +186,13 @@
              obj[field.id] = field.checked;
              return obj;
            }, {});
-           delete scopesFilter['channel.follow'];
            const scopesChecked = Object.keys(scopesFilter).filter((key) => scopesFilter[key] === true && scopesFilter[key] !== 'channel.follow');
-           const query = scopesChecked.join('%20');
+           let query = scopesChecked.join('%20');
            if (query.length > 1) localStorage.setItem('EventSubTypes', query);
-
            //  console.log(scopesCheck);
            const link = document.getElementById('link');
 
-           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query}'>https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query}</a>`;
+           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query}'>https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query.replace('channel.follow','user_read')}</a>`;
          });
 
          async function fetchSubscription(jwt, itchKey, query) {
