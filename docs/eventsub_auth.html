@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html style="height:100%;">
    <head>
@@ -11,7 +10,6 @@
       <meta name="language" content="English">
       <meta name="author" content="Christina K">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/christinna9031/LioranBoard-Files@main/lib/bootstrap.min.css">
-
    </head>
    <style>
       body {
@@ -95,20 +93,24 @@
                <p></p>
                <p>Please provide your key you were given on the Itch.io purchase page:  <input type="text" size=30 id="itchKey"> 
                <p><i>If you haven't retrieved your key from the Itch.io purchase page, you can do so by clicking on the purchase confirmation link that was sent to your email. If you have any issues retrieving your key, please join our <a href="https://discord.gg/dXez8Zh"> Discord server</a> and ask for assistance.</p></i> 
-               <p> Please tick all the relevant events you wish to listen to and press Generate Link. Click on the generated link and authorize it. If you change your mind later, you can always go back to this page and add more! <br>
+               <p> Please tick all the relevant events you wish to listen to and press Generate Link. Click on the generated link and authorize it. If you change your mind later, you can always come back to this page and add more! <br>
                <p><i>If you wish to unsubscribe, you can do so by going to <a href="https://www.twitch.tv/settings/connections">Twitch Settings - Connections</a> and disconnecting LioranBoard-Eventsub app. Repeat this process to subscribe again. </i></p>
 
                <form id='scopes' class='scopes'>
                   <p>
-                     <input id='channel:read:polls' type="checkbox" size=30 id="key"> Twitch Polls
-                     <input id='channel:read:predictions' type="checkbox" size=30 id="key"> Twitch Predictions
-                     <input id='channel:read:hype_train' type="checkbox" size=30 id="key"> Twitch Hype Train
+                     <input id='channel.follow' type="checkbox" size=30 id="key"> Followers (not released)
+                     <input id='channel:read:polls' type="checkbox" size=30 id="key"> Polls
+                     <input id='channel:read:predictions' type="checkbox" size=30 id="key"> Predictions
+                     <input id='channel:read:hype_train' type="checkbox" size=30 id="key"> Hype Trains
                      <input class="btn" id="submit" type="button" value="Generate Link"> 
                   </p>
                </form>
                <div id='link'></div><br>
             </div>
-            <div id="token">  </div> <br> <br>
+            <div id="channelID">  </div>
+            <div id="token">  </div>
+            <div id="log">  </div>
+            <br> <br>
          </div>
  
       </div>
@@ -120,100 +122,104 @@
    </footer>
 </body>
       <script>
-         /* eslint-disable indent */
          const urlString = window.location.href;
          const url = new URL(urlString);
          const success = url.hash.search('access_token');
          const output = document.getElementById('token');
+         const channelID = document.getElementById('channelID');
+         const log = document.getElementById('log');
          const itchKey = localStorage.getItem('itchKeyEventSub');
          if (itchKey) {
-         const itchKeyElem = document.getElementById('itchKey');
-         itchKeyElem.value = itchKey;
-}
+           const itchKeyElem = document.getElementById('itchKey');
+           itchKeyElem.value = itchKey;
+         }
          let refreshTime;
-
          if (success != -1) {
-         let time = 10;
-         refreshTime = setInterval(() => {
-         output.innerHTML = `<strong style='color:#F08800'>SUCCESSFULLY AUTHORIZED! Waiting for ${time} seconds to create subscription. Please do not close or refresh this page.</strong>`;
-         time -= 1;
-         }, 1000);
-         setTimeout(createSubscription, 10000);
-}
-         
-         function createSubscription() {
-         clearInterval(refreshTime);
-         const hash = url.hash.substr(1).split('&');
-         let jwt;
+           let time = 5;
+           refreshTime = setInterval(() => {
+             output.innerHTML = `<strong style='color:#F08800'>SUCCESSFULLY AUTHORIZED! Waiting for ${time} seconds to create subscription. Please do not close or refresh this page.</strong>`;
+             time -= 1;
+           }, 1000);
+           setTimeout(createSubscription, 5000);
+         }
 
-         for (let i = 0; i < hash.length; i++) {
+         function createSubscription() {
+           clearInterval(refreshTime);
+           const hash = url.hash.substr(1).split('&');
+           let jwt;
+
+           for (let i = 0; i < hash.length; i++) {
              if (hash[i].includes('id_token')) {
                jwt = hash[i].split('=')[1];
                break;
-    }
-         }
-         if (!jwt) { document.getElementById('token').innerHTML = '<strong style="color:#F08800">Authorization failed, no JWT token found! Please click on Generate Link and authorize Twitch again!</strong>'; return; }
+             }
+           }
+           if (!jwt) {
+             document.getElementById('token').innerHTML = '<strong style="color:#F08800">Authorization failed, no JWT token found! Please click on Generate Link and authorize Twitch again!</strong>';
+             return;
+           }
 
-         const types = localStorage.getItem('EventSubTypes');
-         const queries = [];
-         if (types.includes('channel:read:predictions')) queries.push('channel.prediction.begin', 'channel.prediction.progress', 'channel.prediction.lock', 'channel.prediction.end');
-         if (types.includes('channel:read:hype_train')) queries.push('channel.hype_train.begin', 'channel.hype_train.progress', 'channel.hype_train.end');
-         if (types.includes('channel:read:polls')) queries.push('channel.poll.begin', 'channel.poll.progress', 'channel.poll.end');
-         const requests = queries.map((query) => fetchSubscription(jwt, itchKey, query));
-         Promise.all(requests)
-         .then((responses) => {
-            output.innerHTML = '<p><strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. In the generated log below, you should see "Verificaton pending". Your extension should now receive all events you subscribed for. (You can close this page and continue with the setup.) </p><p> Log: </strong>';
-         responses.forEach((response) => {
-         output.innerHTML += `${JSON.stringify(response)}<br>`;
-         });
-         })
-         .catch((e) => output.innerHTML = `<strong style="color:#F08800">Error trying to create a subscription: ${e} <br> </strong>`);
-         
-         console.log(hash);
-         console.log(jwt);
-         //   document.getElementById('token').innerHTML = '<strong style="color:#F08800">Authorization complete! You can close this window now.</strong>';
+           const types = localStorage.getItem('EventSubTypes');
+           const queries = [];
+           if (types.includes('channel.follow')) queries.push('channel.follow');
+           if (types.includes('channel:read:predictions')) queries.push('channel.prediction.begin', 'channel.prediction.progress', 'channel.prediction.lock', 'channel.prediction.end');
+           if (types.includes('channel:read:hype_train')) queries.push('channel.hype_train.begin', 'channel.hype_train.progress', 'channel.hype_train.end');
+           if (types.includes('channel:read:polls')) queries.push('channel.poll.begin', 'channel.poll.progress', 'channel.poll.end');
+           const requests = queries.map((query) => fetchSubscription(jwt, itchKey, query));
+           Promise.all(requests)
+             .then((responses) => {
+               output.innerHTML = '<p><strong style="color:#F08800">All requested EventSub subscriptions have been successfully created. In the generated log below, you should see "Verification pending" or "subscription already exists". Your extension should now receive all events you subscribed for. <br></strong> <i></i>  </p>';
+               log.innerHTML = '<p><strong style="color:#F08800> Log: </strong></p>';
+               responses.forEach((response) => {
+                 log.innerHTML += `${JSON.stringify(response.body) || JSON.stringify(response)}<br>`;
+                 if (response.body) channelID.innerHTML = `<p><strong style="color:#F08800"> Channel ID: </strong> ${response.body.channel_id}<ol> <li> In the Eventsub premade deck in your Receiver, right click on the INIT button -> edit. </li> <li> Scroll down and copy paste the channel ID into <code>channel_id</code> field. </li> <li> Press Done and then Done again.</li><li>Continue with the rest of the <a href="https://christinna9031.github.io/LBDocumentation/twitchext.html#eventsub">setup</a>. </li></ol>`;
+               });
+             })
+             .catch((e) => output.innerHTML = `<strong style="color:#F08800">Error trying to create a subscription: ${e} <br> </strong>`);
          }
-         
+
          document.getElementById('submit').addEventListener('click', async () => {
            const itchKey = document.getElementById('itchKey').value;
            if (itchKey.length > 1) localStorage.setItem('itchKeyEventSub', itchKey);
            const scopes = document.querySelector('form');
-           const scopesFilter = Object.values(scopes).reduce((obj, field) => { obj[field.id] = field.checked; return obj; }, {});
+           const scopesFilter = Object.values(scopes).reduce((obj, field) => {
+             obj[field.id] = field.checked;
+             return obj;
+           }, {});
            const scopesChecked = Object.keys(scopesFilter).filter((key) => scopesFilter[key] === true);
-           const query = scopesChecked.join('%20');
-           if (query.length > 1) localStorage.setItem('EventSubTypes', query);
-         
-           //  console.log(scopesCheck);
+           if (scopesChecked.length > 1) localStorage.setItem('EventSubTypes', scopesChecked);
+           if (scopesChecked.indexOf('channel.follow') != -1) scopesChecked.splice(scopesChecked.indexOf('channel.follow', 1));
+           const query = (scopesChecked.length > 0 ) ? `%20${scopesChecked.join('%20')}`: ''
            const link = document.getElementById('link');
-         
-           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query}'>https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid%20${query}</a>`;
+
+           link.innerHTML = `<a href='https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid${query}'>https://id.twitch.tv/oauth2/authorize?client_id=pvwjsiv4dwydmybttc5tenrgrtd3ow&redirect_uri=https://christinna9031.github.io/LioranBoard-Files/eventsub_auth.html&response_type=token%20id_token&scope=openid${query}</a>`;
          });
 
          async function fetchSubscription(jwt, itchKey, query) {
-  const method = 'POST';
-  const baseUri = 'https://8bdgdsrj5m.execute-api.us-west-2.amazonaws.com/main/subscribe?type=';
-  const headers = {
-    authorization: jwt,
-    'x-api-key': itchKey,
-  };
+           const method = 'POST';
+           const baseUri = 'https://8bdgdsrj5m.execute-api.us-west-2.amazonaws.com/test/subscribe?type=';
+           const headers = {
+             authorization: jwt,
+             'x-api-key': itchKey,
+           };
 
-  const response = await fetch(baseUri + query, {
-    method, headers,
-  });
-  let content;
-  if (!response.ok) {
-   const data = await response.json();
-     if (data.status === 409) content = data;
-     else {
-    const error = data.message || data.error || 'Something went wrong.';
-    throw error;
-}
-  } else {
-    content = await response.json();
-  }
-  return content;
-}
-               </script>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+           const response = await fetch(baseUri + query, {
+             method,
+             headers,
+           });
+           let content;
+           if (!response.ok) {
+             const data = await response.json();
+             if (data.status === 409) content = data;
+             else {
+               const error = data.message || data.error || 'Something went wrong.';
+               throw error;
+             }
+           } else {
+             content = await response.json();
+           }
+           return content;
+         }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </html>
