@@ -98,7 +98,7 @@
 
                <form id='scopes' class='scopes'>
                   <p>
-                     <input id='channel.follow' type="checkbox" size=30 id="key"> Followers (not released)
+                     <input id='channel.follow' type="checkbox" size=30 id="key"> Followers
                      <input id='channel:read:polls' type="checkbox" size=30 id="key"> Polls
                      <input id='channel:read:predictions' type="checkbox" size=30 id="key"> Predictions
                      <input id='channel:read:hype_train' type="checkbox" size=30 id="key"> Hype Trains
@@ -197,7 +197,7 @@
 
          async function fetchSubscription(jwt, itchKey, query) {
            const method = 'POST';
-           const baseUri = 'https://8bdgdsrj5m.execute-api.us-west-2.amazonaws.com/test/subscribe?type=';
+           const baseUri = 'https://8bdgdsrj5m.execute-api.us-west-2.amazonaws.com/main/subscribe?type=';
            const headers = {
              authorization: jwt,
              'x-api-key': itchKey,
