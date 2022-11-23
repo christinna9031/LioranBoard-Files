@@ -102,39 +102,9 @@
    <body>
       <div class="main">
          <div class="text">
-            <h1>LioranBoard Spotify Authentication (part1)</h1>
-            
-            <b>Important: To be able to use all features of this extension, you need to have a Premium Spotify account. </b><br>
-            <p>
-            <ol>
-            <li>
-            Log into a developer account on Spotify: <a href="https://developer.spotify.com/dashboard/applications" target="_blank">https://developer.spotify.com/dashboard/applications</a>. This must be the same account you're using to play your Spotify music.     
-            </li>    
-            <li>Go to your <a href="https://developer.spotify.com/dashboard/applications">Dashboard</a> and click on this button <img src="https://i.imgur.com/mdvfl6w.png" class="figure-img img-fluid rounded w-10" width="200px">.</li><Br>
-            <li>Fill out the necessary fields as you see fit and press create. For example: <br><br>
-                    <img src="https://i.imgur.com/CxCldcP.png" class="figure-img img-fluid rounded w-50">
-                    </a></li><br>
-               
-                
-            <li><p>You should now see your created application. (If not, go to <a href="https://developer.spotify.com/dashboard/applications">Dashboard</a> and click on your application name). </li>
-            <li><p>Spotify newly added 'Users and Access' button to the settings. Click on it. (If you cannot see it, try deleting your browser cache or temporarily switching to a different browser.) Click on 'Add New User' and fill out your name and Spotify email address. Press Add. <br> <br> <img src="https://i.imgur.com/OPZ3N9E.png" class="figure-img img-fluid rounded w-60"> </li>   
-             <li>   Click on <img src="https://i.imgur.com/TJ4kF36.png" class="figure-img img-fluid rounded w-5" width="180px" ><br>
-            <li>Copy and paste this: <code>https://lb-spotifytoken.herokuapp.com/callback</code> into Redirect URIs field and click on <b>Add</b>. <p><br><img src="https://i.imgur.com/WzldnNn.png" class="figure-img img-fluid rounded w-60"> <br> Scroll down and do not forget to click on <img src="https://i.imgur.com/Ijibvbi.png" width="100px">. <Br> You can refresh you page and check if it properly saved, otherwise the next step is not going to work. </li>
-            <li>Click on <img src="https://i.imgur.com/HqxD5Lr.png" width="200px" >, copy both your ClientId and Client Secret, paste them below and click on Authenticate. This might take a few seconds to load. You will be then prompted to authenticate your own app you just created. <br> <br>
+            <h1>SAMMI Spotify Authentication has been moved!</h1>
+            <p><a href="https://christinak.ca/extension-files/spotify-654879/auth.html">Please follow this link to authenticate your Spotify.</a></p>
              
-                ClientId: <input type="text" id="clientid"> Client Secret: <input type="text"  id="clientsecret"> 
-                <button type="button" id="SpotifyAuth" style="margin: 2px 0px">Authenticate</button>
-            </li>
-            </ol>    
-            </p><br><br><br>
-            </div>
-            <script>
-                        document.getElementById('SpotifyAuth').addEventListener('click', () => {
-  const client_id = document.getElementById('clientid').value;
-  const client_secret = document.getElementById('clientsecret').value;
-  window.open(`https://lb-spotifytoken.herokuapp.com/login?client_id=${client_id}&client_secret=${client_secret}`);
-});
-                        </script>  
    </body>
    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
